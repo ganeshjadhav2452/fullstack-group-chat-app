@@ -30,7 +30,8 @@ const Chat = () => {
   useEffect(()=>{
       setInterval(() => {
         dispatch(fetchMessagesApiCallHandler())
-      }, 1000);
+      }, 5000);
+     
   },[])
 
   return (
