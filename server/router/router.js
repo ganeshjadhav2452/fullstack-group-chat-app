@@ -13,5 +13,6 @@ router.post('/signin',authControllers.signin)
 //messages routes
 
 router.post('/send-message',verifyUser,messageControllers.sendMessage)
+router.get('/receive-messages',verifyUser,messageControllers.receiveMessages)
 
 module.exports = router

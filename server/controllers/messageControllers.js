@@ -15,7 +15,14 @@ module.exports = messageControllers={
             res.status(500).json({message:'sorry your message can not be sent'})            
         }
     },
-    recivedMessage:async(req,res)=>{
-        
+    receiveMessages:async(req,res)=>{
+
+        try {
+            const response = await Message.findAll()
+            res.status(200).json(response)
+        } catch (error) {
+            res.status(500).json({message:'sorry message cannot be fetched'})
+            
+        }
     },
 }

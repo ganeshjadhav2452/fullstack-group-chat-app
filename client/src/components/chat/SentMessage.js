@@ -1,14 +1,14 @@
 import React from 'react'
 import './chat.css'
-const SentMessage = () => {
+const SentMessage = ({message}) => {
     return (
         <div class="row message-body">
             <div class="col-sm-12 message-main-sender">
                 <div class="sender">
+                    <span class="message-time pull-right">You</span>
                     <div class="message-text">
-                        Thanks n I know its awesome...!
+                        {message.message}
                     </div>
-                    <span class="message-time pull-right">Sun</span>
                 </div>
             </div>
         </div>

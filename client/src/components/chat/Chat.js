@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import "./chat.css";
 import ChatRow from "./ChatRow";
 import RightScreenChatBody from "./RightScreenChatBody";
 import RightScreenChatProfile from "./RightScreenChatProfile";
-import { sendMessageApiCallHandler } from "../../reduxStore/slices/messageSlice";
-import {useDispatch} from 'react-redux';
+import { fetchMessagesApiCallHandler, sendMessageApiCallHandler } from "../../reduxStore/slices/messageSlice";
+import {useDispatch,useSelector} from 'react-redux';
 
 const Chat = () => {
   const [message,setMessage] = useState('')
   const dispatch = useDispatch()
+  const {messages,updated} = useSelector((state)=> state.message)
+
+  console.log(messages)
   const messageChangeHandler =(e)=>{
     setMessage(e.target.value)
   }
@@ -23,6 +26,13 @@ const Chat = () => {
       
     }
   }
+
+  useEffect(()=>{
+    dispatch(fetchMessagesApiCallHandler())
+  },[])
+  useEffect(()=>{
+    dispatch(fetchMessagesApiCallHandler())
+  },[updated])
   return (
     <div className=" ">
       <div class="container  app">
@@ -76,7 +86,7 @@ const Chat = () => {
         
           <RightScreenChatProfile/>
 
-          <RightScreenChatBody />
+          <RightScreenChatBody messages={messages} />
 
           <div class="row reply">
             <div class="col-sm-1 col-xs-1 reply-emojis">

@@ -58,7 +58,7 @@ const authControllers = {
           return res.status(500).json({message:'sorry something went wrong'})
           }
           res.status(200).json({
-            token: token
+            token: token, userId:isUserEmailExists[0].id
           });
         }
       );

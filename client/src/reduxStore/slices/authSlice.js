@@ -24,6 +24,7 @@ export const authApiCallHandler = (userDetails,loginOrSignup)=>{
            const response = await axios.post(`http://localhost:5000/${loginOrSignup}`,{userDetails})
 
            await localStorage.setItem("token",response.data.token)
+           await localStorage.setItem("userId",response.data.userId)
         } catch (error) {
             
             dispatch(setError(error.response.data.message))
