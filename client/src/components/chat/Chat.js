@@ -28,11 +28,11 @@ const Chat = () => {
   }
 
   useEffect(()=>{
-    dispatch(fetchMessagesApiCallHandler())
+      setInterval(() => {
+        dispatch(fetchMessagesApiCallHandler())
+      }, 1000);
   },[])
-  useEffect(()=>{
-    dispatch(fetchMessagesApiCallHandler())
-  },[updated])
+
   return (
     <div className=" ">
       <div class="container  app">
