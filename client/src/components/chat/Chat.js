@@ -1,9 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import "./chat.css";
 import ChatRow from "./ChatRow";
 import RightScreenChatBody from "./RightScreenChatBody";
 import RightScreenChatProfile from "./RightScreenChatProfile";
+import { sendMessageApiCallHandler } from "../../reduxStore/slices/messageSlice";
+import {useDispatch} from 'react-redux';
+
 const Chat = () => {
+  const [message,setMessage] = useState('')
+  const dispatch = useDispatch()
+  const messageChangeHandler =(e)=>{
+    setMessage(e.target.value)
+  }
+
+  const sendClickHandler =async()=>{
+   console.log(message)
+    try {
+    await  dispatch(sendMessageApiCallHandler(message))
+
+    } catch (error) {
+      console.log(error)
+      
+    }
+  }
   return (
     <div className=" ">
       <div class="container  app">
@@ -61,15 +80,15 @@ const Chat = () => {
 
           <div class="row reply">
             <div class="col-sm-1 col-xs-1 reply-emojis">
-              <i class="fa fa-smile-o fa-2x"></i>
+              <i class="fa fa-smile-o fa-2x"> </i>
             </div>
             <div class="col-sm-9 col-xs-9 reply-main">
-              <textarea class="form-control" rows="1" id="comment"></textarea>
+              <textarea onChange={messageChangeHandler} class="form-control" rows="1" id="comment" placeholder="say something..."></textarea>
             </div>
             <div class="col-sm-1 col-xs-1 reply-recording">
               <i class="fa fa-microphone fa-2x" aria-hidden="true"></i>
             </div>
-            <div class="col-sm-1 col-xs-1 reply-send">
+            <div onClick={sendClickHandler} class="col-sm-1 col-xs-1 reply-send">
               <i class="fa fa-send fa-2x" aria-hidden="true"></i>
             </div>
           </div>

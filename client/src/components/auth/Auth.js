@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import './auth.css'
 import { useDispatch ,useSelector} from 'react-redux'
 import { authApiCallHandler } from '../../reduxStore/slices/authSlice'
+import {useNavigate} from 'react-router-dom'
 const Auth = () => {
     const dispatch = useDispatch()
     const {error} = useSelector(state=>state.auth)
+    const navigate = useNavigate()
     const [switchAuth, setSwitchAuth] = useState(true)
     const [userDetails, setUserDetails] = useState({
         name: '',
@@ -65,6 +67,7 @@ const Auth = () => {
             loginOrSignup = 'signin'
             try {
                 await dispatch(authApiCallHandler(signUpUserDetails, loginOrSignup))
+                navigate('/chats')
             } catch (error) {
                 console.log(error)
             }

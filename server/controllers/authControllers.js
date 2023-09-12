@@ -50,7 +50,7 @@ const authControllers = {
 
     } else if (password && isUserEmailExists[0].email == email) {
       return Jwt.sign(
-        { id: isUserEmailExists[0].id },
+        { id: isUserEmailExists[0].id ,name:isUserEmailExists[0].name},
         process.env.JWT_SECRETE_KEY,
 
         (err, token) => {
