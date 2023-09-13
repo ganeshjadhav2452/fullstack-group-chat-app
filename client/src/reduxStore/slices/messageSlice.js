@@ -13,6 +13,8 @@ const messageSlice = createSlice({
         updateCommonState(state,action){
            
             state.messages = [...state.messages,...action.payload]
+            console.log('this is previous array',[...state.messages])
+            console.log('this is latest array',[...action.payload])
         },
         setUpdated(state,action){
             state.updated = !state.updated
@@ -25,7 +27,7 @@ export default messageSlice.reducer;
 
 
 export const sendMessageApiCallHandler =(message)=>{
-    console.log(message)
+    
     return async(dispatch,getState)=>{
 
         try {
@@ -37,7 +39,7 @@ export const sendMessageApiCallHandler =(message)=>{
                   "Content-Type": "application/json"
                 }
               });
-             dispatch(setUpdated())
+          
             console.log(response)
         } catch (error) {
             console.log(error)
@@ -59,8 +61,13 @@ export const fetchMessagesApiCallHandler=()=>{
                 }
               })
             
-            dispatch(updateCommonState(response.data))
-           lastId = ('lastId',response.data[response.data.length -1]?.id)
+           
+         
+            if(response.data.length > 0){
+             
+                dispatch(updateCommonState(response.data))
+                lastId =response.data[response.data.length -1]?.id
+            }
         
            
         } catch (error) {

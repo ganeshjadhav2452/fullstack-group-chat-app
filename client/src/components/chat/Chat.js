@@ -26,13 +26,15 @@ const Chat = () => {
       
     }
   }
-
-  useEffect(()=>{
-      setInterval(() => {
-        dispatch(fetchMessagesApiCallHandler())
-      }, 5000);
-     
-  },[])
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      dispatch(fetchMessagesApiCallHandler());
+    }, 5000);
+  
+    return () => {
+      clearInterval(intervalId); 
+    };
+  }, []);
 
   return (
     <div className=" ">

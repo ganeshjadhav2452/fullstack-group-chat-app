@@ -24,7 +24,7 @@ module.exports = messageControllers={
             const response = await Message.findAll({
                 where: {
                   id: {
-                    [Op.gt]: lastId
+                    [Op.gt]: lastId 
                   }
                 }
               });
