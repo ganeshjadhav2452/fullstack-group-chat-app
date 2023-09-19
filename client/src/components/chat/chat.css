@@ -1,15 +1,13 @@
-html,
-body,
-div,
-span {
-  height: 100%;
-  width: 100%;
+
+
+.parent-div {
+  height: 100vh;
+  width: 100vw;
   overflow: hidden;
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
-
 body {
   background: url("http://shurl.esy.es/y") no-repeat fixed center;
   background-size: cover;
@@ -313,6 +311,9 @@ body {
   /*width: 100%;*/
   border-left: 1px solid rgba(0, 0, 0, .08);
   /*overflow-y: auto;*/
+  display: flex;
+  flex-direction: column;
+  
 }
 
 .message {
@@ -362,6 +363,7 @@ body {
 
 .message-text {
   margin: 0 !important;
+  margin-left: 10rem;
   padding: 5px !important;
   word-wrap:break-word;
   font-weight: 200;
@@ -379,7 +381,7 @@ body {
 }
 
 .receiver {
-  width: auto !important;
+  width: 20rem !important;
   padding: 4px 10px 7px !important;
   border-radius: 10px 10px 10px 0;
   background: #ffffff;
@@ -387,11 +389,13 @@ body {
   text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
   word-wrap: break-word;
   display: inline-block;
+  margin-top: 0.5rem;
+
 }
 
 .sender {
   float: right;
-  width: auto !important;
+  width: 20rem !important;
   background: #dcf8c6;
   border-radius: 10px 10px 0 10px;
   padding: 4px 10px 7px !important;

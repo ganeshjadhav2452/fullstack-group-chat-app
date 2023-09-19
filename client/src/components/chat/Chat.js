@@ -5,13 +5,18 @@ import RightScreenChatBody from "./RightScreenChatBody";
 import RightScreenChatProfile from "./RightScreenChatProfile";
 import { fetchMessagesApiCallHandler, sendMessageApiCallHandler } from "../../reduxStore/slices/messageSlice";
 import {useDispatch,useSelector} from 'react-redux';
+import CreateGroupForm from "./CreateGroupForm";
+import { fetchGroupsApiCall } from "../../reduxStore/slices/groupSlice";
+
+
 
 const Chat = () => {
   const [message,setMessage] = useState('')
   const dispatch = useDispatch()
   const {messages,updated} = useSelector((state)=> state.message)
+  const {currentGroup,newGroupChanges} = useSelector((state)=> state.groups)
+  const [openForm,setOpenForm] = useState(false)
 
-  console.log(messages)
   const messageChangeHandler =(e)=>{
     setMessage(e.target.value)
   }
@@ -19,25 +24,32 @@ const Chat = () => {
   const sendClickHandler =async()=>{
    console.log(message)
     try {
-    await  dispatch(sendMessageApiCallHandler(message))
+    await  dispatch(sendMessageApiCallHandler(message,localStorage.getItem('groupId')))
 
     } catch (error) {
       console.log(error)
       
     }
   }
+
+
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      dispatch(fetchMessagesApiCallHandler());
+    const intervalId = setInterval(async() => {
+      dispatch(fetchMessagesApiCallHandler(localStorage.getItem('groupId')));
     }, 5000);
-  
+   
     return () => {
       clearInterval(intervalId); 
     };
   }, []);
 
+  useEffect(()=>{
+    dispatch(fetchGroupsApiCall())
+  },[newGroupChanges])
+
   return (
-    <div className=" ">
+    <div className="parent-div">
+     
       <div class="container  app">
       <div class="row app-one">
         <div class="col-sm-4 side">
@@ -55,13 +67,14 @@ const Chat = () => {
                 ></i>
               </div>
               <div class="col-sm-2 col-xs-2 heading-compose  pull-right">
-                <i
+                <i onClick={()=>setOpenForm(!openForm)}
                   class="fa fa-comments fa-2x  pull-right"
                   aria-hidden="true"
-                ></i>
+                >+</i>
+            
               </div>
             </div>
-
+            {openForm && <CreateGroupForm/>}
             <div class="row searchBox">
               <div class="col-sm-12 searchBox-inner">
                 <div class="form-group has-feedback">
@@ -87,7 +100,7 @@ const Chat = () => {
 
         <div class="col-sm-8 conversation">
         
-          <RightScreenChatProfile/>
+          <RightScreenChatProfile currentGroup={currentGroup}/>
 
           <RightScreenChatBody messages={messages} />
 
