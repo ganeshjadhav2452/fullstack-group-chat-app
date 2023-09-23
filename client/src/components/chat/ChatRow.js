@@ -1,7 +1,7 @@
 import React from 'react'
 import './chat.css'
 import { useSelector,useDispatch } from 'react-redux'
-import {setCurrentGroup} from '../../reduxStore/slices/groupSlice'
+import {setCurrentGroup} from '../../reduxStore/slices/groupsSlice'
 import { updateCommonState } from '../../reduxStore/slices/messageSlice'
 const ChatRow = () => {
   const dispatch = useDispatch()

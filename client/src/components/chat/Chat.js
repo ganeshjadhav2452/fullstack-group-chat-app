@@ -6,7 +6,7 @@ import RightScreenChatProfile from "./RightScreenChatProfile";
 import { fetchMessagesApiCallHandler, sendMessageApiCallHandler } from "../../reduxStore/slices/messageSlice";
 import {useDispatch,useSelector} from 'react-redux';
 import CreateGroupForm from "./CreateGroupForm";
-import { fetchGroupsApiCall } from "../../reduxStore/slices/groupSlice";
+import { fetchGroupsApiCall } from "../../reduxStore/slices/groupsSlice";
 
 
 
@@ -36,10 +36,14 @@ const Chat = () => {
   useEffect(() => {
     const intervalId = setInterval(async() => {
       dispatch(fetchMessagesApiCallHandler(localStorage.getItem('groupId')));
+    }, 1000);
+    const intervalId1 = setInterval(async() => {
+      dispatch(fetchGroupsApiCall());
     }, 5000);
    
     return () => {
       clearInterval(intervalId); 
+      clearInterval(intervalId1); 
     };
   }, []);
 

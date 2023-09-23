@@ -1,0 +1,19 @@
+/* Styles for the button */
+.button {
+    display: inline-block;
+    padding:0 0.5rem ;
+    background-color: #d9534f; /* Bootstrap's danger color */
+    color: #fff;
+    border: none;
+    border-radius: 20px; /* Adjust the border radius as needed */
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 0.4rem;
+  }
+  
+  /* Hover effect */
+  .button:hover {
+    background-color: #c9302c; /* Darker shade for hover effect */
+  }

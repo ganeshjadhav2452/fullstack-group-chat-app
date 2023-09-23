@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './ProfileSearch.css'
 import { searchInitialApiCallHandler } from '../../reduxStore/slices/searchSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { addUserToGroupApiCallHandler } from '../../reduxStore/slices/groupSlice'
+import { addUserToGroupApiCallHandler } from '../../reduxStore/slices/groupsSlice'
 
 
 const ProfileSearch = () => {

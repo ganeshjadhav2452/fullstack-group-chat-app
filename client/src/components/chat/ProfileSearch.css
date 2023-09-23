@@ -68,5 +68,8 @@
   margin-left: -1.5em;
   color: #0074D9;
 }
+.ul > li:hover {
+  cursor: pointer;
+}
 
 

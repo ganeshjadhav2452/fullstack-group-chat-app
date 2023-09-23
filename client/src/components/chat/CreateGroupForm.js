@@ -1,6 +1,6 @@
 import React,{useRef, useState} from 'react'
 import './createGroupForm.css'
-import {createGroupApiCall} from '../../reduxStore/slices/groupSlice'
+import {createGroupApiCall} from '../../reduxStore/slices/groupsSlice'
 import {useDispatch} from 'react-redux'
 
 const CreateGroupForm = () => {
