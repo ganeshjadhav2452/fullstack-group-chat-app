@@ -162,7 +162,7 @@ export const removeUserFromGroupClickHandler = (groupId, userId, adminUserId) =>
                 }
             })
            dispatch( fetchUsersOfGroupApiCallHandler())
-            console.log('this is response from removeUserResponse>>>',removeUserResponse.message)
+       
         } catch (error) {
             console.log(error)
         }

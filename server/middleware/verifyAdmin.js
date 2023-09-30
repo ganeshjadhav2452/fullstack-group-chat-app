@@ -13,7 +13,7 @@ const verifyAdmin = async(req,res,next)=>{
           const isAdmin = groupInfo ? groupInfo.isAdmin : false;
 
           if(isAdmin){
-            console.log('admin verification completed')
+        
             next()
           }else{
             res.status(404).json({message:"sorry only admin can perform this action"})

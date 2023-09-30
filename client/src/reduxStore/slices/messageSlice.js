@@ -16,6 +16,8 @@ const messageSlice = createSlice({
           if(action.payload.vanish){
             state.messages = [];
             state.lastId = 0;
+          }else if(action.payload.singleMessage){
+            state.messages = [...state.messages, action.payload.message]
           }else{
             state.messages = [...state.messages, ...action.payload.messages]
             state.lastId = action.payload.lastId
@@ -47,7 +49,7 @@ export const sendMessageApiCallHandler = (message, groupId) => {
                 }
             });
 
-            console.log(response)
+           
         } catch (error) {
             console.log(error)
 
@@ -76,7 +78,12 @@ export const fetchMessagesApiCallHandler = ( groupId ) => {
 
             if (response.data.length > 0) {
 
-                dispatch(updateCommonState({messages:response.data,vanish:false,lastId :response.data[response.data.length - 1]?.id}))
+                dispatch(updateCommonState({
+                    messages:response.data,
+                    vanish:false,
+                    singleMessage:false,
+                    lastId :response.data[response.data.length - 1]?.id
+                }))
                 
             }
 

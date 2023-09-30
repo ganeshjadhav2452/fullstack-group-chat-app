@@ -12,7 +12,7 @@ module.exports = groupControllers = {
                 groupName: req.body.groupName,
                 admin: userId,
             });
-            console.log('thi is response of group creation >>>---',response)
+        
        
           
            
@@ -23,7 +23,7 @@ module.exports = groupControllers = {
                         groupId: response.id
                     }
                 })
-                console.log('this is group info>>>--- ',groupInfo)
+             
                 groupInfo.isAdmin = true;
                 groupInfo.save()
          
@@ -48,7 +48,7 @@ module.exports = groupControllers = {
     addUser: async (req, res) => {
         const userId = Number(req.body.userId);
         const groupId = req.body.groupId;
-        console.log("this is group id ()()()()()()", groupId);
+     
         try {
             const user = await User.findByPk(userId);
             if (!user) {
@@ -59,7 +59,7 @@ module.exports = groupControllers = {
 
 
             if (!group) {
-                console.log("this is group brooooooo//////>>", group);
+             
                 throw new Error("Group not found");
             }
             await user.addGroup(group);
@@ -82,7 +82,7 @@ module.exports = groupControllers = {
             const users = await avilableGroup.getUsers({
                 attributes: ["id", "name", "email"],
             });
-            console.log("this is avilable group bro()()()()()()", users);
+          
             res.status(200).json({ data: users });
         } catch (error) {
             console.log(error);

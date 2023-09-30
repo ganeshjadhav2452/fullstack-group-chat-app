@@ -29,10 +29,10 @@ const RightScreenChatBody = ({ messages }) => {
 
            {messages.map((messageObj)=>{
            if(messageObj.userId == userId){
-            console.log('entered in receive')
+         
             return  <SentMessage message={messageObj}/>
            }else{
-            console.log('entered in sent')
+        
             return  <RecivedMessage message={messageObj}/>
            }
            })} 

@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './chat.css'
 import { useSelector,useDispatch } from 'react-redux'
-import {setCurrentGroup} from '../../reduxStore/slices/groupsSlice'
+import {setCurrentGroup,fetchGroupsApiCall} from '../../reduxStore/slices/groupsSlice'
 import { updateCommonState } from '../../reduxStore/slices/messageSlice'
 const ChatRow = () => {
   const dispatch = useDispatch()
-  const {groups} = useSelector(state => state.groups)
+  const {groups,newGroupChanges} = useSelector(state => state.groups)
 
   const groupClickHandler=(groupData)=>{
 
@@ -18,6 +18,10 @@ const ChatRow = () => {
     console.log(error)
   }
   }
+
+  useEffect(()=>{
+    (dispatch(fetchGroupsApiCall()))
+  },[newGroupChanges])
   return (
    <>
    {

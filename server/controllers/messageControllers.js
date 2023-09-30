@@ -3,7 +3,7 @@ const { Op } = require("sequelize");
 
 module.exports = messageControllers={
     sendMessage:async(req,res)=>{
-      console.log('thi is >>>',req.user)
+    
         try {
             const response = await req.user.createMessage({
                 name:req.user.name,
@@ -32,7 +32,7 @@ module.exports = messageControllers={
                 },
               });
               
-              console.log(response)
+            
             res.status(200).json(response)
         } catch (error) {
             console.log(error)

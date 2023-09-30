@@ -7,24 +7,34 @@ import { fetchMessagesApiCallHandler, sendMessageApiCallHandler } from "../../re
 import {useDispatch,useSelector} from 'react-redux';
 import CreateGroupForm from "./CreateGroupForm";
 import { fetchGroupsApiCall } from "../../reduxStore/slices/groupsSlice";
-
-
+import { socket } from "../../socketInfo/socketInfo";
+import { updateCommonState } from "../../reduxStore/slices/messageSlice";
+const userId = localStorage.getItem('userId')
 
 const Chat = () => {
   const [message,setMessage] = useState('')
   const dispatch = useDispatch()
-  const {messages,updated} = useSelector((state)=> state.message)
+  let {messages,updated} = useSelector((state)=> state.message)
   const {currentGroup,newGroupChanges} = useSelector((state)=> state.groups)
   const [openForm,setOpenForm] = useState(false)
+  const groupId = localStorage.getItem('groupId')
 
+   
+  
   const messageChangeHandler =(e)=>{
     setMessage(e.target.value)
   }
 
   const sendClickHandler =async()=>{
-   console.log(message)
+
     try {
-    await  dispatch(sendMessageApiCallHandler(message,localStorage.getItem('groupId')))
+    await  dispatch(sendMessageApiCallHandler(message,groupId))
+
+    // socket io to send message
+
+    socket.emit('send-message',{message,userId},groupId)
+    
+  
 
     } catch (error) {
       console.log(error)
@@ -34,23 +44,38 @@ const Chat = () => {
 
 
   useEffect(() => {
-    const intervalId = setInterval(async() => {
-      dispatch(fetchMessagesApiCallHandler(localStorage.getItem('groupId')));
-    }, 1000);
-    const intervalId1 = setInterval(async() => {
-      dispatch(fetchGroupsApiCall());
-    }, 5000);
    
+      dispatch(fetchMessagesApiCallHandler(groupId));
+   
+   
+  }, [groupId]);
+
+ 
+
+  useEffect(() => {
+    // fetching groups at initial call
+    dispatch(fetchGroupsApiCall())
+
+    // Set up the socket.io listener when the component mounts
+    socket.on('receive-message', handleMessageReceived);
+  
+    // Clean up the listener when the component unmounts
     return () => {
-      clearInterval(intervalId); 
-      clearInterval(intervalId1); 
+      socket.off('receive-message', handleMessageReceived);
     };
   }, []);
-
-  useEffect(()=>{
-    dispatch(fetchGroupsApiCall())
-  },[newGroupChanges])
-
+  
+  const handleMessageReceived = (messageObj, receivedGroupId) => {
+    console.log('Received a message: ', messageObj, receivedGroupId);
+    if (messageObj) {
+      dispatch(updateCommonState({
+        message: messageObj,
+        vanish: false,
+        singleMessage: true
+      }));
+    }
+  };
+  
   return (
     <div className="parent-div">
      

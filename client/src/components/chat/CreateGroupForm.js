@@ -2,6 +2,7 @@ import React,{useRef, useState} from 'react'
 import './createGroupForm.css'
 import {createGroupApiCall} from '../../reduxStore/slices/groupsSlice'
 import {useDispatch} from 'react-redux'
+import { socket } from '../../socketInfo/socketInfo'
 
 const CreateGroupForm = () => {
     const groupNameRef = useRef()
@@ -11,6 +12,8 @@ const CreateGroupForm = () => {
       console.log('triggered')
         try {
             await dispatch(createGroupApiCall(groupNameRef.current.value))
+
+          
         } catch (error) {
             console.log(error)
             
