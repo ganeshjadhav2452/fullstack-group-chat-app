@@ -33,14 +33,13 @@ Group.belongsToMany(User, {
 
 Group.hasMany(Message); // One-to-Many
 Message.belongsTo(Group); // One-to-Many
+let  appServer =   app.listen(process.env.PORT, () => {
+    console.log('server started...')
+  })
 
-let appServer = app.listen(process.env.PORT, () => {
-  console.log('server started...')
-});
 
 
 const io = require('socket.io')(appServer, {
-  pingTimeout: 60000,
   cors: {
     origin: 'http://localhost:3000'
   }

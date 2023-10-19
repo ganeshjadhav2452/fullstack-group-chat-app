@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { lazy, useEffect,Suspense } from "react";
 import "./ProfileSearch.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsersOfGroupApiCallHandler } from "../../reduxStore/slices/groupsSlice";
-import PromotAdminButton from "./chatItems/PromotAdminButton";
-import DeleteButton from "./chatItems/DeleteButton";
+// lazy loaded
+const PromotAdminButton = lazy(()=>import("./chatItems/PromotAdminButton"));
+const DeleteButton = lazy(() => import("./chatItems/DeleteButton"));
 
 const GroupUser = () => {
   const dispatch = useDispatch();
@@ -40,11 +41,15 @@ const GroupUser = () => {
               )}
               {isUserAdmin && profile.id !== Number(currentUserId) && (
                 <>
-               
+
                   {!profile["group-user-info"].isAdmin && (
-                    <PromotAdminButton userId={profile.id} />
+                   <Suspense fallback={<div>Loading...</div>}>
+                  <PromotAdminButton userId={profile.id} />
+                 </Suspense>
                   )}
-                  <DeleteButton userId={profile.id}/>
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <DeleteButton userId={profile.id} />
+                  </Suspense>
                 </>
               )}
             </li>
